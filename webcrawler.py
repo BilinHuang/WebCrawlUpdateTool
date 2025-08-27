@@ -1,4 +1,6 @@
 # in this version at least we get the correct line for the person
+# we give up the support for email, but we keep the part of code for searching and validating emails
+
 import csv
 import requests
 import time
