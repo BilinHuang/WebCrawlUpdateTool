@@ -13,6 +13,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException, NoSuchElementException
 import getpass
 
+search_result = open('search_result.txt', 'w', newline='')
 
 class LinkedInVerifier:
     def __init__(self):
@@ -93,18 +94,29 @@ class LinkedInVerifier:
             # Look for profile results
             results = soup.find_all('div')
 
+            mark = 0
+            index = 0
             for result in results:
-                # Extract profile link
-                print(result,end="\n")
+                if "Currently on the page 1 of" in result.text:
+                    mark = 1
+                if mark == 1:
+                    for line in result.text.splitlines():
+                        if "Current:" in line:
+                            # Extract profile link
+                            print("index:" , index , line,end="\n")
+                            index = index + 1
+                            search_result.write(result.text)
 
-                link_element = result.find('a', class_='app-aware-link')
-                if not link_element:
-                    continue
 
-                profile_url = link_element.get('href')
-                if '/in/' in profile_url:
-                    return profile_url.split('?')[0]  # Remove query parameters
+                    """
+                    link_element = result.find('a', class_='app-aware-link')
+                    if not link_element:
+                        continue
 
+                    profile_url = link_element.get('href')
+                    if '/in/' in profile_url:
+                        return profile_url.split('?')[0]  # Remove query parameters
+                    """
             return None
 
         except Exception as e:
