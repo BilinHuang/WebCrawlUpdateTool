@@ -1,3 +1,4 @@
+# in this version at least we get the correct line for the person
 import csv
 import requests
 import time
