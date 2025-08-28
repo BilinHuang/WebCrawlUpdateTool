@@ -1,5 +1,11 @@
 # V3.0
-#
+"""
+in this version we assume we have a csv with 
+
+full name, company name, job title, email(not supported, but we have this LOL)
+
+
+"""
 import csv
 from bs4 import BeautifulSoup
 import time
