@@ -8,6 +8,15 @@ we use name + company to search the user
 
 then for the linkedin website, we take the first search answer as the target
 
+then, we use the descrition directly under the name to decide the company name and title
+
+we assume there are two format:
+{
+name at company
+compant - name
+}
+Then we print the comparisiong result in terminal and output the file to compare.csv
+
 """
 import csv
 from bs4 import BeautifulSoup
