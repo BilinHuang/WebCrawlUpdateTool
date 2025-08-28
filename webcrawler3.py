@@ -4,6 +4,9 @@ in this version we assume we have a csv with
 
 full name, company name, job title, email(not supported, but we have this LOL)
 
+we use name + company to search the user
+
+then for the linkedin website, we take the first search answer as the target
 
 """
 import csv
