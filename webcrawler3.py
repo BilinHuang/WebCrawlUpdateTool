@@ -1,4 +1,4 @@
-# V3.0
+# V3.1
 """
 in this version we assume we have a csv with 
 
@@ -16,7 +16,6 @@ name at company
 compant - name
 }
 Then we print the comparisiong result in terminal and output the file to compare.csv
-
 """
 import csv
 from bs4 import BeautifulSoup
