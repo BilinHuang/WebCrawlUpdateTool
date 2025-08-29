@@ -16,6 +16,8 @@ name at company
 compant - name
 }
 Then we print the comparisiong result in terminal and output the file to compare.csv
+
+Note, there are still lots of unsolved and not found cases, so be careful when using.
 """
 import csv
 from bs4 import BeautifulSoup
