@@ -169,12 +169,8 @@ print("LinkedIn Profile Verification Tool")
 print("==================================")
 
 # Get LinkedIn credentials
-"""
 username = input("Enter your LinkedIn username/email: ")
 password = input("Enter your LinkedIn password: ")
-"""
-username = "bilinhuang5@gmail.com"
-password = "Billy060615"
 
 compare_file = open("compare.csv", "w")
 compare_file.write(f"\"Original name\",\"Searched name\",\"Original company\",\"Searched company\",\"Original job title\",\"Searched job title\"\n")
