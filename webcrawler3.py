@@ -76,11 +76,14 @@ def search_linkedin(driver, name, company):
     encoded_query = quote(search_query)
     url = f"https://www.linkedin.com/search/results/people/?keywords={encoded_query}"
 
-    answer = Profile(None, None, None, None)
+    answer = Profile("Not_found", "Not_found", "Not_found", "Not_found")
     try:
         print(f"Searching for: {name} at {company}")
         driver.get(url)
-        time.sleep(3)
+        time.sleep(2)
+        WebDriverWait(driver, 20).until(
+            EC.presence_of_element_located((By.CLASS_NAME, 'artdeco-card'))
+        )
 
         page_source = driver.page_source
         soup = BeautifulSoup(page_source, 'html.parser')
@@ -142,28 +145,51 @@ def verify_record(driver, full_name, company, title, email):
 
 
     # Search for the profile
+    if "(" in company:
+        company = company.split("(")[0]
     answer = search_linkedin(driver, full_name, company)
+    if answer is None:
+        answer = Profile("Not_found", "Not_found", "Not_found", "Not_found")
+    else:
+        answer.fullname = answer.fullname.rstrip().lower()
+        answer.company = answer.company.rstrip().lower()
+        answer.job_title = answer.job_title.rstrip().lower()
+
+        full_name = full_name.rstrip().lower()
+        company = company.rstrip().lower()
+        title = title.rstrip().lower()
+
+
     if (answer.company != company) or (answer.fullname != full_name) or (answer.job_title != title):
         print(f"visit https://www.linkedin.com/search/results/people/?keywords={full_name},{company}")
+
+    incorrect = False
 
     if answer.fullname != full_name:
         print("Incompatible name:", full_name, ":", answer.fullname)
         compare_file.write(f"\"{full_name}\",\"{answer.fullname}\",")
+        incorrect = True
     else:
         compare_file.write(f"\"{full_name}\",\"\",")
 
     if answer.company != company:
         print("Incompatible company:", company, ":", answer.company)
         compare_file.write(f"\"{company}\",\"{answer.company}\",")
+        incorrect = True
     else:
         compare_file.write(f"\"{company}\",\"\",")
 
     if answer.job_title != title:
         print("Incompatible title:",title, ":", answer.job_title)
         compare_file.write(f"\"{title}\",\"{answer.job_title}\"\n")
+        incorrect = True
     else:
         compare_file.write(f"\"{title}\",\"\"\n")
 
+    if not incorrect:
+        print("This is correct!!!\n")
+    else:
+        print("This is incorrect!!!\n")
 
 print("LinkedIn Profile Verification Tool")
 print("==================================")
@@ -171,6 +197,7 @@ print("==================================")
 # Get LinkedIn credentials
 username = input("Enter your LinkedIn username/email: ")
 password = input("Enter your LinkedIn password: ")
+
 
 compare_file = open("compare.csv", "w")
 compare_file.write(f"\"Original name\",\"Searched name\",\"Original company\",\"Searched company\",\"Original job title\",\"Searched job title\"\n")
