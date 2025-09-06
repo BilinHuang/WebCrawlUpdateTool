@@ -3,3 +3,4 @@ This is a tool aming to search and compare data between local data and linkedin 
 Considering lots of web crawl operations, this will be basically based on python.
 
 Basically finished, but still cannot handle the notification to get premium.
+So if you have a premium, you will be fine.
